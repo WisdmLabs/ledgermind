@@ -1,0 +1,197 @@
+{
+	"actions": [],
+	"autoname": "LM-APRV-.#####",
+	"creation": "2026-05-08 12:00:00.000000",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"title",
+		"approval_type",
+		"status",
+		"column_break_1",
+		"ai_confidence",
+		"cloud_approval_id",
+		"description_section",
+		"description",
+		"ai_reasoning",
+		"action_section",
+		"proposed_action",
+		"reference_section",
+		"source_doctype",
+		"source_docname",
+		"column_break_ref",
+		"target_doctype",
+		"target_docname",
+		"decision_section",
+		"decided_by",
+		"decided_at",
+		"column_break_decision",
+		"rejection_reason"
+	],
+	"fields": [
+		{
+			"fieldname": "title",
+			"fieldtype": "Data",
+			"in_list_view": 1,
+			"label": "Title",
+			"reqd": 1
+		},
+		{
+			"fieldname": "approval_type",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Approval Type",
+			"options": "Bank Reconciliation\nAP Invoice Processing\nGST Compliance\nTDS Classification\nMonth-End Close\nAR Collections\nOther",
+			"reqd": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Pending\nApproved\nRejected\nExpired",
+			"default": "Pending",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "ai_confidence",
+			"fieldtype": "Percent",
+			"in_list_view": 1,
+			"label": "AI Confidence"
+		},
+		{
+			"fieldname": "cloud_approval_id",
+			"fieldtype": "Data",
+			"label": "Cloud Approval ID",
+			"unique": 1
+		},
+		{
+			"fieldname": "description_section",
+			"fieldtype": "Section Break",
+			"label": "Details"
+		},
+		{
+			"fieldname": "description",
+			"fieldtype": "Text Editor",
+			"label": "Description"
+		},
+		{
+			"fieldname": "ai_reasoning",
+			"fieldtype": "Text",
+			"label": "AI Reasoning"
+		},
+		{
+			"fieldname": "action_section",
+			"fieldtype": "Section Break",
+			"label": "Proposed Action",
+			"collapsible": 1
+		},
+		{
+			"fieldname": "proposed_action",
+			"fieldtype": "JSON",
+			"label": "Proposed Action"
+		},
+		{
+			"fieldname": "reference_section",
+			"fieldtype": "Section Break",
+			"label": "References"
+		},
+		{
+			"fieldname": "source_doctype",
+			"fieldtype": "Link",
+			"label": "Source DocType",
+			"options": "DocType"
+		},
+		{
+			"fieldname": "source_docname",
+			"fieldtype": "Dynamic Link",
+			"label": "Source Document",
+			"options": "source_doctype"
+		},
+		{
+			"fieldname": "column_break_ref",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "target_doctype",
+			"fieldtype": "Link",
+			"label": "Target DocType",
+			"options": "DocType"
+		},
+		{
+			"fieldname": "target_docname",
+			"fieldtype": "Dynamic Link",
+			"label": "Target Document",
+			"options": "target_doctype"
+		},
+		{
+			"fieldname": "decision_section",
+			"fieldtype": "Section Break",
+			"label": "Decision",
+			"depends_on": "eval:doc.status!='Pending'"
+		},
+		{
+			"fieldname": "decided_by",
+			"fieldtype": "Link",
+			"label": "Decided By",
+			"options": "User",
+			"read_only": 1
+		},
+		{
+			"fieldname": "decided_at",
+			"fieldtype": "Datetime",
+			"label": "Decided At",
+			"read_only": 1
+		},
+		{
+			"fieldname": "column_break_decision",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "rejection_reason",
+			"fieldtype": "Small Text",
+			"label": "Rejection Reason",
+			"depends_on": "eval:doc.status=='Rejected'"
+		}
+	],
+	"index_web_pages_for_search": 0,
+	"links": [],
+	"modified": "2026-05-08 12:00:00.000000",
+	"modified_by": "Administrator",
+	"module": "LedgerMind",
+	"name": "LedgerMind Approval",
+	"naming_rule": "Expression (old style)",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"create": 1,
+			"delete": 1,
+			"email": 1,
+			"print": 1,
+			"read": 1,
+			"role": "System Manager",
+			"share": 1,
+			"write": 1
+		},
+		{
+			"create": 0,
+			"read": 1,
+			"role": "Accounts Manager",
+			"write": 1
+		},
+		{
+			"read": 1,
+			"role": "Accounts User",
+			"write": 0
+		}
+	],
+	"sort_field": "creation",
+	"sort_order": "DESC",
+	"states": [],
+	"title_field": "title",
+	"track_changes": 1
+}

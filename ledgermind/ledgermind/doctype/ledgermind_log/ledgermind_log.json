@@ -1,0 +1,127 @@
+{
+	"actions": [],
+	"autoname": "LM-LOG-.#####",
+	"creation": "2026-05-08 12:00:00.000000",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"action_type",
+		"status",
+		"column_break_1",
+		"execution_time_ms",
+		"cloud_request_id",
+		"reference_section",
+		"doctype_ref",
+		"docname_ref",
+		"payload_section",
+		"request_payload",
+		"column_break_payload",
+		"response_payload",
+		"error_section",
+		"error_message"
+	],
+	"fields": [
+		{
+			"fieldname": "action_type",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Action Type",
+			"options": "API Call\nBank Reconciliation\nAP Invoice Processing\nGST Compliance Check\nTDS Classification\nMonth-End Close Step\nAR Collections Action\nConnection Test",
+			"reqd": 1
+		},
+		{
+			"fieldname": "status",
+			"fieldtype": "Select",
+			"in_list_view": 1,
+			"label": "Status",
+			"options": "Success\nError\nPending",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_1",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "execution_time_ms",
+			"fieldtype": "Int",
+			"label": "Execution Time (ms)",
+			"in_list_view": 1
+		},
+		{
+			"fieldname": "cloud_request_id",
+			"fieldtype": "Data",
+			"label": "Cloud Request ID"
+		},
+		{
+			"fieldname": "reference_section",
+			"fieldtype": "Section Break",
+			"label": "Related Document"
+		},
+		{
+			"fieldname": "doctype_ref",
+			"fieldtype": "Link",
+			"label": "Related DocType",
+			"options": "DocType"
+		},
+		{
+			"fieldname": "docname_ref",
+			"fieldtype": "Dynamic Link",
+			"label": "Related Document",
+			"options": "doctype_ref"
+		},
+		{
+			"fieldname": "payload_section",
+			"fieldtype": "Section Break",
+			"label": "Payload",
+			"collapsible": 1
+		},
+		{
+			"fieldname": "request_payload",
+			"fieldtype": "JSON",
+			"label": "Request Sent"
+		},
+		{
+			"fieldname": "column_break_payload",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "response_payload",
+			"fieldtype": "JSON",
+			"label": "Response Received"
+		},
+		{
+			"fieldname": "error_section",
+			"fieldtype": "Section Break",
+			"label": "Error Details",
+			"collapsible": 1,
+			"depends_on": "eval:doc.status=='Error'"
+		},
+		{
+			"fieldname": "error_message",
+			"fieldtype": "Small Text",
+			"label": "Error Message"
+		}
+	],
+	"index_web_pages_for_search": 0,
+	"links": [],
+	"modified": "2026-05-08 12:00:00.000000",
+	"modified_by": "Administrator",
+	"module": "LedgerMind",
+	"name": "LedgerMind Log",
+	"naming_rule": "Expression (old style)",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"read": 1,
+			"role": "System Manager"
+		},
+		{
+			"read": 1,
+			"role": "Accounts Manager"
+		}
+	],
+	"sort_field": "creation",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 0
+}

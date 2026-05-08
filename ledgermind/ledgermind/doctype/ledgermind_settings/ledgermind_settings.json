@@ -1,0 +1,207 @@
+{
+	"actions": [],
+	"allow_rename": 0,
+	"creation": "2026-05-08 12:00:00.000000",
+	"doctype": "DocType",
+	"engine": "InnoDB",
+	"field_order": [
+		"connection_section",
+		"cloud_api_url",
+		"api_key",
+		"api_secret",
+		"column_break_conn",
+		"connection_status",
+		"last_connected",
+		"test_connection_btn",
+		"features_section",
+		"enable_ap_automation",
+		"enable_bank_recon",
+		"enable_gst_compliance",
+		"column_break_feat",
+		"enable_tds_compliance",
+		"enable_month_end_close",
+		"enable_ar_collections",
+		"approval_section",
+		"auto_approve_threshold",
+		"column_break_approval",
+		"confidence_threshold",
+		"notifications_section",
+		"notify_on_approval",
+		"notification_email",
+		"column_break_notif",
+		"webhook_url"
+	],
+	"fields": [
+		{
+			"fieldname": "connection_section",
+			"fieldtype": "Section Break",
+			"label": "Cloud Connection"
+		},
+		{
+			"fieldname": "cloud_api_url",
+			"fieldtype": "Data",
+			"label": "Cloud API URL",
+			"reqd": 1,
+			"description": "LedgerMind Cloud SaaS API endpoint (must use HTTPS)"
+		},
+		{
+			"fieldname": "api_key",
+			"fieldtype": "Password",
+			"label": "API Key",
+			"reqd": 1
+		},
+		{
+			"fieldname": "api_secret",
+			"fieldtype": "Password",
+			"label": "API Secret",
+			"reqd": 1
+		},
+		{
+			"fieldname": "column_break_conn",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "connection_status",
+			"fieldtype": "Select",
+			"label": "Connection Status",
+			"options": "\nConnected\nError\nNot Configured",
+			"read_only": 1,
+			"default": "Not Configured"
+		},
+		{
+			"fieldname": "last_connected",
+			"fieldtype": "Datetime",
+			"label": "Last Connected",
+			"read_only": 1
+		},
+		{
+			"fieldname": "test_connection_btn",
+			"fieldtype": "Button",
+			"label": "Test Connection"
+		},
+		{
+			"fieldname": "features_section",
+			"fieldtype": "Section Break",
+			"label": "Feature Toggles"
+		},
+		{
+			"fieldname": "enable_ap_automation",
+			"fieldtype": "Check",
+			"label": "Enable AP Invoice Processing",
+			"default": 0
+		},
+		{
+			"fieldname": "enable_bank_recon",
+			"fieldtype": "Check",
+			"label": "Enable Bank Reconciliation",
+			"default": 0
+		},
+		{
+			"fieldname": "enable_gst_compliance",
+			"fieldtype": "Check",
+			"label": "Enable GST Compliance",
+			"default": 0
+		},
+		{
+			"fieldname": "column_break_feat",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "enable_tds_compliance",
+			"fieldtype": "Check",
+			"label": "Enable TDS Compliance",
+			"default": 0
+		},
+		{
+			"fieldname": "enable_month_end_close",
+			"fieldtype": "Check",
+			"label": "Enable Month-End Close",
+			"default": 0
+		},
+		{
+			"fieldname": "enable_ar_collections",
+			"fieldtype": "Check",
+			"label": "Enable AR Collections",
+			"default": 0
+		},
+		{
+			"fieldname": "approval_section",
+			"fieldtype": "Section Break",
+			"label": "Approval Settings"
+		},
+		{
+			"fieldname": "auto_approve_threshold",
+			"fieldtype": "Currency",
+			"label": "Auto-approve Below (INR)",
+			"description": "Transactions below this amount may be auto-approved"
+		},
+		{
+			"fieldname": "column_break_approval",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "confidence_threshold",
+			"fieldtype": "Percent",
+			"label": "Min Confidence for Auto-action",
+			"default": 95,
+			"description": "AI confidence must exceed this to trigger auto-actions"
+		},
+		{
+			"fieldname": "notifications_section",
+			"fieldtype": "Section Break",
+			"label": "Notifications"
+		},
+		{
+			"fieldname": "notify_on_approval",
+			"fieldtype": "Check",
+			"label": "Notify on Approval Required",
+			"default": 1
+		},
+		{
+			"fieldname": "notification_email",
+			"fieldtype": "Data",
+			"label": "Notification Email",
+			"options": "Email",
+			"depends_on": "notify_on_approval"
+		},
+		{
+			"fieldname": "column_break_notif",
+			"fieldtype": "Column Break"
+		},
+		{
+			"fieldname": "webhook_url",
+			"fieldtype": "Data",
+			"label": "Webhook URL (optional)",
+			"description": "External webhook for notifications"
+		}
+	],
+	"index_web_pages_for_search": 0,
+	"issingle": 1,
+	"links": [],
+	"modified": "2026-05-08 12:00:00.000000",
+	"modified_by": "Administrator",
+	"module": "LedgerMind",
+	"name": "LedgerMind Settings",
+	"owner": "Administrator",
+	"permissions": [
+		{
+			"create": 1,
+			"delete": 0,
+			"email": 1,
+			"print": 1,
+			"read": 1,
+			"role": "System Manager",
+			"share": 1,
+			"write": 1
+		},
+		{
+			"read": 1,
+			"role": "Accounts Manager",
+			"write": 1
+		}
+	],
+	"sort_field": "creation",
+	"sort_order": "DESC",
+	"states": [],
+	"track_changes": 1
+}

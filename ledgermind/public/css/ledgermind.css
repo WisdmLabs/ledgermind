@@ -1,0 +1,80 @@
+/* LedgerMind app styles */
+
+.ledgermind-dashboard .section-head {
+	font-size: var(--text-lg);
+	font-weight: 600;
+	margin-bottom: var(--margin-md);
+	color: var(--heading-color);
+}
+
+.ledgermind-dashboard .status-indicator {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin-right: 6px;
+}
+
+.ledgermind-dashboard .status-indicator.connected {
+	background-color: var(--green-500);
+}
+
+.ledgermind-dashboard .status-indicator.error {
+	background-color: var(--red-500);
+}
+
+.ledgermind-dashboard .status-indicator.not-configured {
+	background-color: var(--yellow-500);
+}
+
+.ledgermind-dashboard .feature-card {
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-md);
+	padding: var(--padding-md);
+	margin-bottom: var(--margin-sm);
+}
+
+.ledgermind-dashboard .feature-card.enabled {
+	border-left: 3px solid var(--green-500);
+}
+
+.ledgermind-dashboard .feature-card.disabled {
+	border-left: 3px solid var(--gray-400);
+	opacity: 0.7;
+}
+
+.ledgermind-dashboard .approval-card {
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-md);
+	padding: var(--padding-md);
+	margin-bottom: var(--margin-sm);
+	cursor: pointer;
+	transition: box-shadow 0.2s;
+}
+
+.ledgermind-dashboard .approval-card:hover {
+	box-shadow: var(--shadow-sm);
+}
+
+.ledgermind-dashboard .confidence-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: var(--border-radius-sm);
+	font-size: var(--text-xs);
+	font-weight: 600;
+}
+
+.ledgermind-dashboard .confidence-badge.high {
+	background-color: var(--green-100);
+	color: var(--green-700);
+}
+
+.ledgermind-dashboard .confidence-badge.medium {
+	background-color: var(--yellow-100);
+	color: var(--yellow-700);
+}
+
+.ledgermind-dashboard .confidence-badge.low {
+	background-color: var(--red-100);
+	color: var(--red-700);
+}

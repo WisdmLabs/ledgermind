@@ -1,0 +1,36 @@
+<h3>LedgerMind Approval Required</h3>
+
+<p>A new action requires your approval:</p>
+
+<table style="width:100%;border-collapse:collapse;margin:16px 0">
+	<tr>
+		<td style="padding:8px;border:1px solid #ddd;font-weight:bold">Title</td>
+		<td style="padding:8px;border:1px solid #ddd">{{ doc.title }}</td>
+	</tr>
+	<tr>
+		<td style="padding:8px;border:1px solid #ddd;font-weight:bold">Type</td>
+		<td style="padding:8px;border:1px solid #ddd">{{ doc.approval_type }}</td>
+	</tr>
+	<tr>
+		<td style="padding:8px;border:1px solid #ddd;font-weight:bold">AI Confidence</td>
+		<td style="padding:8px;border:1px solid #ddd">{{ doc.ai_confidence }}%</td>
+	</tr>
+	{% if doc.ai_reasoning %}
+	<tr>
+		<td style="padding:8px;border:1px solid #ddd;font-weight:bold">AI Reasoning</td>
+		<td style="padding:8px;border:1px solid #ddd">{{ doc.ai_reasoning }}</td>
+	</tr>
+	{% endif %}
+</table>
+
+<p>
+	<a href="{{ frappe.utils.get_url() }}/app/ledgermind-approval/{{ doc.name }}"
+	   style="display:inline-block;padding:10px 20px;background:#4F46E5;color:#fff;text-decoration:none;border-radius:4px">
+		Review &amp; Decide
+	</a>
+</p>
+
+<p style="color:#666;font-size:12px">
+	This is an automated notification from LedgerMind.
+	You received this because approval notifications are enabled in LedgerMind Settings.
+</p>

@@ -1,0 +1,80 @@
+{
+	"charts": [],
+	"content": null,
+	"creation": "2026-05-08 12:00:00.000000",
+	"docstatus": 0,
+	"doctype": "Workspace",
+	"for_user": "",
+	"hide_custom": 0,
+	"icon": "chart-line",
+	"idx": 0,
+	"is_default": 0,
+	"label": "LedgerMind",
+	"links": [
+		{
+			"hidden": 0,
+			"is_query_report": 0,
+			"label": "Dashboard",
+			"link_count": 0,
+			"link_to": "ledgermind-dashboard",
+			"link_type": "Page",
+			"onboard": 1,
+			"type": "Link"
+		},
+		{
+			"hidden": 0,
+			"is_query_report": 0,
+			"label": "Settings",
+			"link_count": 0,
+			"link_to": "LedgerMind Settings",
+			"link_type": "DocType",
+			"onboard": 1,
+			"type": "Link"
+		},
+		{
+			"hidden": 0,
+			"is_query_report": 0,
+			"label": "Approvals",
+			"link_count": 0,
+			"link_to": "LedgerMind Approval",
+			"link_type": "DocType",
+			"type": "Link"
+		},
+		{
+			"hidden": 0,
+			"is_query_report": 0,
+			"label": "Activity Log",
+			"link_count": 0,
+			"link_to": "LedgerMind Log",
+			"link_type": "DocType",
+			"type": "Link"
+		}
+	],
+	"modified": "2026-05-08 12:00:00.000000",
+	"modified_by": "Administrator",
+	"module": "LedgerMind",
+	"name": "LedgerMind",
+	"owner": "Administrator",
+	"parent_page": "",
+	"public": 1,
+	"restrict_to_domain": "",
+	"roles": [],
+	"sequence_id": 30,
+	"shortcuts": [
+		{
+			"color": "Blue",
+			"doc_view": "",
+			"label": "Pending Approvals",
+			"link_to": "LedgerMind Approval",
+			"stats_filter": "{\"status\":\"Pending\"}",
+			"type": "DocType"
+		},
+		{
+			"color": "Green",
+			"label": "Dashboard",
+			"link_to": "ledgermind-dashboard",
+			"type": "Page"
+		}
+	],
+	"title": "LedgerMind"
+}
