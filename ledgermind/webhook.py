@@ -16,7 +16,7 @@ def receive_webhook():
 	if not hmac.compare_digest(signature, f"sha256={expected}"):
 		frappe.throw("Invalid webhook signature", frappe.AuthenticationError)
 
-	data = frappe.parse_json(payload)
+	data = frappe.parse_json(payload.decode() if isinstance(payload, bytes) else payload)
 	event_type = data.get("event")
 
 	handlers = {

@@ -41,20 +41,17 @@
 			"fieldname": "cloud_api_url",
 			"fieldtype": "Data",
 			"label": "Cloud API URL",
-			"reqd": 1,
 			"description": "LedgerMind Cloud SaaS API endpoint (must use HTTPS)"
 		},
 		{
 			"fieldname": "api_key",
 			"fieldtype": "Password",
-			"label": "API Key",
-			"reqd": 1
+			"label": "API Key"
 		},
 		{
 			"fieldname": "api_secret",
 			"fieldtype": "Password",
-			"label": "API Secret",
-			"reqd": 1
+			"label": "API Secret"
 		},
 		{
 			"fieldname": "column_break_conn",
