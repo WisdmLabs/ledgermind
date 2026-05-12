@@ -25,6 +25,7 @@ add_to_apps_screen = [
 doc_events = {
 	"Purchase Invoice": {
 		"on_update": "ledgermind.handlers.purchase_invoice.on_save",
+		"on_submit": "ledgermind.handlers.tds.on_submit",
 	},
 	"Bank Transaction": {
 		"after_insert": "ledgermind.handlers.bank_transaction.after_insert",
@@ -35,12 +36,17 @@ doc_events = {
 scheduler_events = {
 	"daily": [
 		"ledgermind.tasks.daily_reconciliation",
+		"ledgermind.tasks.daily_tds_review",
 	],
 	"hourly": [
 		"ledgermind.tasks.hourly_sync",
 	],
 	"weekly": [
 		"ledgermind.tasks.weekly_gst_check",
+		"ledgermind.tasks.weekly_ar_analysis",
+	],
+	"monthly": [
+		"ledgermind.tasks.monthly_close_reminder",
 	],
 }
 

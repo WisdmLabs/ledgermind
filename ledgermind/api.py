@@ -35,14 +35,23 @@ def classify_tds(supplier: str, invoice_name: str):
 
 @frappe.whitelist()
 def run_close_step(company: str, period: str, step: str):
-	client = LedgerMindCloudClient()
-	return client.run_close_step(company, period, step)
+	from ledgermind.handlers.month_end_close import run_step
+
+	return run_step(company, period, step)
+
+
+@frappe.whitelist()
+def get_close_status(company: str, period: str):
+	from ledgermind.handlers.month_end_close import get_close_status as _get_close_status
+
+	return _get_close_status(company, period)
 
 
 @frappe.whitelist()
 def analyze_receivables(company: str):
-	client = LedgerMindCloudClient()
-	return client.analyze_ar(company)
+	from ledgermind.handlers.ar_collections import analyze_company_receivables
+
+	return analyze_company_receivables(company)
 
 
 @frappe.whitelist()

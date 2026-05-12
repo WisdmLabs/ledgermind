@@ -65,6 +65,80 @@ def weekly_gst_check():
 			)
 
 
+def daily_tds_review():
+	if not is_feature_enabled("enable_tds_compliance"):
+		return
+
+	invoices = frappe.get_all(
+		"Purchase Invoice",
+		filters={
+			"docstatus": 1,
+			"tax_withholding_category": ["in", ["", None]],
+			"posting_date": [">=", frappe.utils.add_days(frappe.utils.today(), -7)],
+		},
+		pluck="name",
+		limit=50,
+	)
+
+	for invoice_name in invoices:
+		already_pending = frappe.db.exists(
+			"LedgerMind Approval",
+			{
+				"approval_type": "TDS Classification",
+				"source_docname": invoice_name,
+				"status": "Pending",
+			},
+		)
+		if already_pending:
+			continue
+
+		frappe.enqueue(
+			"ledgermind.handlers.tds.classify_tds",
+			queue="short",
+			invoice_name=invoice_name,
+			supplier=frappe.db.get_value("Purchase Invoice", invoice_name, "supplier"),
+		)
+
+
+def weekly_ar_analysis():
+	if not is_feature_enabled("enable_ar_collections"):
+		return
+
+	from ledgermind.handlers.ar_collections import analyze_company_receivables
+
+	companies = frappe.get_all("Company", pluck="name")
+	for company in companies:
+		try:
+			analyze_company_receivables(company)
+		except Exception as e:
+			frappe.log_error(
+				f"AR analysis failed for {company}: {e}",
+				"LedgerMind Scheduled Task",
+			)
+
+
+def monthly_close_reminder():
+	if not is_feature_enabled("enable_month_end_close"):
+		return
+
+	from ledgermind.handlers.month_end_close import CLOSE_STEPS, get_close_status
+
+	companies = frappe.get_all("Company", pluck="name")
+	current_period = frappe.utils.formatdate(frappe.utils.today(), "MM-yyyy")
+
+	for company in companies:
+		status = get_close_status(company, current_period)
+		if status["progress"] < 100:
+			incomplete = [s["step"] for s in status["steps"] if not s["completed"]]
+			settings = frappe.get_single("LedgerMind Settings")
+			if settings.notify_on_approval and settings.notification_email:
+				frappe.sendmail(
+					recipients=[settings.notification_email],
+					subject=f"LedgerMind: Month-End Close Incomplete — {company} ({current_period})",
+					message=f"The following close steps are pending: {', '.join(incomplete)}",
+				)
+
+
 def _create_approvals_for_matches(matches, bank_account):
 	for match in matches:
 		if match.get("confidence", 0) < 0.95:

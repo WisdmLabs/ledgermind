@@ -12,6 +12,9 @@ class TestTasks(FrappeTestCase):
 		settings = frappe.get_single("LedgerMind Settings")
 		settings.enable_bank_recon = 0
 		settings.enable_gst_compliance = 0
+		settings.enable_tds_compliance = 0
+		settings.enable_ar_collections = 0
+		settings.enable_month_end_close = 0
 		settings.flags.ignore_mandatory = True
 		settings.save()
 
@@ -107,3 +110,22 @@ class TestTasks(FrappeTestCase):
 			filters={"approval_type": "Bank Reconciliation"},
 		)
 		self.assertEqual(len(approvals), 1)
+
+	def test_daily_tds_review_skips_when_disabled(self):
+		from ledgermind.tasks import daily_tds_review
+
+		with patch("ledgermind.tasks.frappe") as mock_frappe:
+			mock_frappe.db = frappe.db
+			daily_tds_review()
+
+	def test_weekly_ar_analysis_skips_when_disabled(self):
+		from ledgermind.tasks import weekly_ar_analysis
+
+		with patch("ledgermind.tasks.LedgerMindCloudClient") as mock_client:
+			weekly_ar_analysis()
+			mock_client.assert_not_called()
+
+	def test_monthly_close_reminder_skips_when_disabled(self):
+		from ledgermind.tasks import monthly_close_reminder
+
+		monthly_close_reminder()

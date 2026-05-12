@@ -26,6 +26,7 @@ class LedgerMindDashboard {
 				<div class="col-md-8">
 					<div id="lm-connection-status" class="mb-4"></div>
 					<div id="lm-pending-approvals" class="mb-4"></div>
+					<div id="lm-month-end-close" class="mb-4"></div>
 					<div id="lm-recent-activity" class="mb-4"></div>
 				</div>
 				<div class="col-md-4">
@@ -37,6 +38,7 @@ class LedgerMindDashboard {
 
 		this.render_connection_status();
 		this.render_pending_approvals();
+		this.render_month_end_close();
 		this.render_recent_activity();
 		this.render_feature_status();
 		this.render_quick_actions();
@@ -164,6 +166,66 @@ class LedgerMindDashboard {
 					<div class="section-head">Features</div>
 					${cards}
 				`);
+			},
+		});
+	}
+
+	render_month_end_close() {
+		frappe.call({
+			method: "frappe.client.get",
+			args: { doctype: "LedgerMind Settings", name: "LedgerMind Settings" },
+			callback: (r) => {
+				let settings = r.message || {};
+				if (!settings.enable_month_end_close) {
+					this.$wrapper.find("#lm-month-end-close").hide();
+					return;
+				}
+
+				let company = frappe.defaults.get_default("company");
+				if (!company) {
+					this.$wrapper.find("#lm-month-end-close").html(`
+						<div class="section-head">Month-End Close</div>
+						<p class="text-muted">Set a default company to view close status.</p>
+					`);
+					return;
+				}
+
+				let today = frappe.datetime.get_today();
+				let period = moment(today).format("MM-YYYY");
+
+				frappe.call({
+					method: "ledgermind.api.get_close_status",
+					args: { company: company, period: period },
+					callback: (r) => {
+						let data = r.message || { steps: [], progress: 0 };
+						let steps_html = data.steps
+							.map(
+								(s) => `
+							<div class="d-flex align-items-center mb-1">
+								<span class="indicator-pill ${s.completed ? "green" : "orange"} mr-2"></span>
+								<span>${s.step.replace(/_/g, " ")}</span>
+								${
+									!s.completed
+										? `<button class="btn btn-xs btn-primary ml-auto"
+											onclick="frappe.call({method:'ledgermind.api.run_close_step',args:{company:'${company}',period:'${period}',step:'${s.step}'},freeze:true,callback:()=>location.reload()})">
+											Run
+										</button>`
+										: '<span class="ml-auto text-success">Done</span>'
+								}
+							</div>`
+							)
+							.join("");
+
+						this.$wrapper.find("#lm-month-end-close").html(`
+							<div class="section-head">
+								Month-End Close
+								<span class="badge badge-info ml-2">${data.progress.toFixed(0)}%</span>
+							</div>
+							<p class="text-muted mb-2">${company} &mdash; ${period}</p>
+							${steps_html}
+						`);
+					},
+				});
 			},
 		});
 	}
