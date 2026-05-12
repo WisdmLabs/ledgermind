@@ -21,6 +21,7 @@ class TestApprovalExecutor(FrappeTestCase):
 		}
 		defaults.update(kwargs)
 		doc = frappe.get_doc(defaults)
+		doc.flags.ignore_links = True
 		doc.insert(ignore_permissions=True)
 		return doc
 
@@ -92,6 +93,6 @@ class TestApprovalExecutor(FrappeTestCase):
 
 		logs = frappe.get_all(
 			"LedgerMind Log",
-			filters={"action_type": "Month-End Close"},
+			filters={"action_type": "Month-End Close Step"},
 		)
 		self.assertTrue(len(logs) >= 1)

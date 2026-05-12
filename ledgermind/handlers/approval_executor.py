@@ -1,5 +1,14 @@
 import frappe
 
+LOG_ACTION_TYPE_MAP = {
+	"Bank Reconciliation": "Bank Reconciliation",
+	"AP Invoice Processing": "AP Invoice Processing",
+	"TDS Classification": "TDS Classification",
+	"GST Compliance": "GST Compliance Check",
+	"Month-End Close": "Month-End Close Step",
+	"AR Collections": "AR Collections Action",
+}
+
 
 def execute_approved_action(approval_doc):
 	action = frappe.parse_json(approval_doc.proposed_action or "{}")
@@ -147,10 +156,11 @@ def _execute_ar_action(approval_doc, action):
 
 
 def _log_execution(approval_doc, status, error_message=None):
+	action_type = LOG_ACTION_TYPE_MAP.get(approval_doc.approval_type, "API Call")
 	frappe.get_doc(
 		{
 			"doctype": "LedgerMind Log",
-			"action_type": approval_doc.approval_type,
+			"action_type": action_type,
 			"status": status,
 			"doctype_ref": approval_doc.source_doctype,
 			"docname_ref": approval_doc.source_docname,

@@ -35,7 +35,7 @@ def classify_tds(invoice_name: str, supplier: str):
 		if confidence >= threshold:
 			_apply_tds_classification(invoice_name, classification)
 		else:
-			frappe.get_doc(
+			doc = frappe.get_doc(
 				{
 					"doctype": "LedgerMind Approval",
 					"approval_type": "TDS Classification",
@@ -47,7 +47,9 @@ def classify_tds(invoice_name: str, supplier: str):
 					"source_docname": invoice_name,
 					"status": "Pending",
 				}
-			).insert(ignore_permissions=True)
+			)
+			doc.flags.ignore_links = True
+			doc.insert(ignore_permissions=True)
 	except Exception as e:
 		frappe.log_error(f"LedgerMind TDS classification failed: {e}", "LedgerMind")
 

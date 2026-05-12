@@ -21,7 +21,7 @@ def analyze_company_receivables(company: str):
 			threshold = (settings.confidence_threshold or 95) / 100
 
 			if confidence < threshold:
-				frappe.get_doc(
+				approval = frappe.get_doc(
 					{
 						"doctype": "LedgerMind Approval",
 						"approval_type": "AR Collections",
@@ -33,7 +33,9 @@ def analyze_company_receivables(company: str):
 						"source_docname": rec.get("customer"),
 						"status": "Pending",
 					}
-				).insert(ignore_permissions=True)
+				)
+				approval.flags.ignore_links = True
+				approval.insert(ignore_permissions=True)
 
 		frappe.get_doc(
 			{
